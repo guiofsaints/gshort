@@ -5,7 +5,7 @@
 
 import { ApiResponse } from '@/lib/api';
 import { deleteShortUrl, existsShortUrl } from '@/models/shortUrl';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 /**
  * DELETE handler for removing shortened URLs
@@ -14,7 +14,7 @@ import { NextResponse } from 'next/server';
  * @returns ApiResponse with success/error message and appropriate status code
  */
 export async function DELETE(
-  request: Request,
+  request: NextRequest,
   { params }: { params: { shortCode: string } }
 ) {
   try {

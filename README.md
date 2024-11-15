@@ -24,8 +24,8 @@ A modern URL shortener built with Next.js 14, Redis Cloud, and Vercel.
 1. Clone repository:
 
 ```bash
-git clone https://github.com/yourusername/url-shortener.git
-cd g-short
+git clone https://github.com/guiofsaints/gshort
+cd gshort
 ```
 
 2. Install dependencies:

@@ -1,0 +1,3 @@
+.swaggerWrapper :global(.swagger-ui .info .title small.version-stamp) {
+  display: none;
+}

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Check } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { CopyButton } from './CopyButton';
@@ -33,19 +32,6 @@ type SuccessAlertProps = {
  * @returns {JSX.Element} A success alert with copy functionality
  */
 export function SuccessAlert({ message, onCopy }: SuccessAlertProps) {
-  /** State to track if content has been copied */
-  const [copied, setCopied] = useState(false);
-
-  /**
-   * Handles the copy operation
-   * @param {string} text - The text to be copied
-   */
-  const handleCopy = (text: string) => {
-    onCopy(text);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
   return (
     <Alert className="mt-4">
       <Check className="h-4 w-4" />

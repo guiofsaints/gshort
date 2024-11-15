@@ -98,7 +98,7 @@ export async function updateShortUrl(
  */
 export async function existsShortUrl(
   shortCode: string
-): Promise<Boolean | null> {
+): Promise<boolean | null> {
   return exists(`url:${shortCode}`);
 }
 
@@ -182,6 +182,8 @@ export async function deactivateShortUrl(shortCode: string): Promise<boolean> {
     await setValue(`url:${shortCode}`, updatedData);
     return true;
   } catch (error) {
+    console.log(error);
+
     throw new Error('Failed to deactivate URL');
   }
 }

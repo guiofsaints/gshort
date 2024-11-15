@@ -3,7 +3,11 @@
  * This component manages URL redirection for a URL shortener service
  */
 
-import { getShortUrl, incrementUrlVisits } from '@/models/shortUrl';
+import {
+  getShortUrl,
+  incrementUrlVisits,
+  ShortUrlType,
+} from '@/models/shortUrl';
 import { redirect } from 'next/navigation';
 import { RedirectType } from 'next/navigation';
 
@@ -19,7 +23,7 @@ type PageProps = {
 export default async function RedirectPage({ params }: PageProps) {
   const { shortCode } = await params;
 
-  const shortUrl: any = await getShortUrl(shortCode);
+  const shortUrl: ShortUrlType | null = await getShortUrl(shortCode);
   if (!shortUrl) {
     return <div>URL not found</div>;
   }

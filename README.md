@@ -2,6 +2,10 @@
 
 A modern URL shortener built with Next.js 14, Redis Cloud, and Vercel.
 
+- Production URL: https://gslink.vercel.app/
+- Development URL: http://localhost:300
+- API Docs: https://gslink.vercel.app/docs
+
 ## Features
 
 - URL shortening with custom IDs
@@ -13,25 +17,19 @@ A modern URL shortener built with Next.js 14, Redis Cloud, and Vercel.
 
 ## Tech Stack
 
-- Next.js 14
+Frontend:
+
+- Next.js
 - TypeScript
-- Redis Cloud
-- Tailwind CSS
+- React
+- Tailwind
+- Shadcn
+
+Backend:
+
+- Typescript
+- Redis
 - Nanoid
-
-## Structure
-
-```
-gslink/
-├── .vscode/
-├── public/
-├── src/
-│   ├── components/
-│   ├── pages/
-│   ├── styles/
-│   └── utils/
-
-```
 
 ## Setup
 
@@ -49,38 +47,23 @@ npm install
 ```
 
 3. Configure environment variables in `.env.local`:
-
 4. Run development server:
 
 ```bash
 npm run dev
 ```
 
-5. Build for production:
-
-```bash
-npm run build
-```
+5. Access in your browser: http://localhost:3000
 
 ## Testing
 
-The project uses Jest and Supertest for API testing.
-
-1. Install testing dependencies:
-
-```bash
-npm install --save-dev jest @types/jest ts-jest @testing-library/jest-dom supertest @types/supertest @jest/globals
-```
-
-2. Run tests:
+Run tests:
 
 ```bash
 # Run all tests
 npm test
-
 # Run tests in watch mode
 npm run test:watch
-
 # Run tests with coverage
 npm run test:coverage
 ```
@@ -97,12 +80,47 @@ Test files are located in the `__tests__` directory and follow the naming conven
 
 ## Deployment
 
+## Vercel CLI Setup
+
+1. Install Vercel CLI globally:
+
+```bash
+npm install -g vercel
+```
+
+2. Login to your Vercel account:
+
+```bash
+vercel login
+```
+
+3. Link your project to Vercel:
+
+```bash
+# Navigate to your project directory
+cd gslink
+
+# Link to Vercel
+vercel link
+
+# Follow the prompts to:
+# - Select or create a Vercel account
+# - Select or create a project
+# - Link to existing project or create new one
+```
+
+4. Pull environment variables from Vercel (optional):
+
+```bash
+vercel env pull
+```
+
 Deploy to Vercel:
 
 ```bash
-vercel deploy
+# Deploy to preview
+vercel
+
+# Deploy to production
+vercel --prod
 ```
-
-## License
-
-MIT

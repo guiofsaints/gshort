@@ -19,36 +19,55 @@ A modern URL shortener built with Next.js 14, Redis Cloud, and Vercel.
 
 ```mermaid
 graph TD
-    subgraph Client
+    %% Node definitions with explicit color styling
+    subgraph Client[" Client "]
+        style Client fill:#f5f5f5,stroke:#333,color:#000
         Browser["🌐 Browser"]
+        style Browser fill:#fff,stroke:#333,color:#000
     end
 
-    subgraph "Vercel Platform"
-        subgraph "Frontend - Next.js"
+    subgraph Vercel[" Vercel Platform "]
+        style Vercel fill:#f5f5f5,stroke:#333,color:#000
+
+        subgraph Frontend[" Frontend - Next.js "]
+            style Frontend fill:#e6e6e6,stroke:#333,color:#000
             Pages["📄 Pages/Routes"]
             Components["🧩 React Components"]
+            style Pages fill:#fff,stroke:#333,color:#000
+            style Components fill:#fff,stroke:#333,color:#000
             Pages --> Components
         end
 
-        subgraph "Backend - API Routes"
+        subgraph Backend[" Backend - API Routes "]
+            style Backend fill:#e6e6e6,stroke:#333,color:#000
             API["⚡ API Endpoints"]
             Services["🔧 Services"]
             Models["📊 Models"]
+            style API fill:#fff,stroke:#333,color:#000
+            style Services fill:#fff,stroke:#333,color:#000
+            style Models fill:#fff,stroke:#333,color:#000
 
             API --> Services
             Services --> Models
         end
 
-        subgraph "Core Features"
+        subgraph Features[" Core Features "]
+            style Features fill:#e6e6e6,stroke:#333,color:#000
             URLShortener["✂️ URL Shortener"]
             Analytics["📈 Analytics"]
             URLManagement["⚙️ URL Management"]
             Dashboard["📊 Dashboard"]
+            style URLShortener fill:#fff,stroke:#333,color:#000
+            style Analytics fill:#fff,stroke:#333,color:#000
+            style URLManagement fill:#fff,stroke:#333,color:#000
+            style Dashboard fill:#fff,stroke:#333,color:#000
         end
     end
 
-    subgraph "External Services"
+    subgraph External[" External Services "]
+        style External fill:#f5f5f5,stroke:#333,color:#000
         Redis["🗄️ Redis Cloud"]
+        style Redis fill:#d9d9d9,stroke:#333,color:#000
     end
 
     Browser --> Pages
@@ -58,13 +77,8 @@ graph TD
     URLManagement --> Redis
     API --> Redis
 
-    classDef platform fill:#f9f,stroke:#333,stroke-width:2px
-    classDef service fill:#bbf,stroke:#333,stroke-width:2px
-    classDef database fill:#dfd,stroke:#333,stroke-width:2px
-
-    class Vercel platform
-    class API,Services,Models service
-    class Redis database
+    %% Estilo das linhas
+    linkStyle default stroke:#333,stroke-width:1px
 ```
 
 ## Tech Stack

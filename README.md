@@ -15,6 +15,58 @@ A modern URL shortener built with Next.js 14, Redis Cloud, and Vercel.
 - Redis Cloud for fast URL resolution
 - Serverless deployment on Vercel
 
+## Architecture
+
+```mermaid
+graph TD
+    subgraph Client
+        Browser["🌐 Browser"]
+    end
+
+    subgraph "Vercel Platform"
+        subgraph "Frontend - Next.js"
+            Pages["📄 Pages/Routes"]
+            Components["🧩 React Components"]
+            Pages --> Components
+        end
+
+        subgraph "Backend - API Routes"
+            API["⚡ API Endpoints"]
+            Services["🔧 Services"]
+            Models["📊 Models"]
+
+            API --> Services
+            Services --> Models
+        end
+
+        subgraph "Core Features"
+            URLShortener["✂️ URL Shortener"]
+            Analytics["📈 Analytics"]
+            URLManagement["⚙️ URL Management"]
+            Dashboard["📊 Dashboard"]
+        end
+    end
+
+    subgraph "External Services"
+        Redis["🗄️ Redis Cloud"]
+    end
+
+    Browser --> Pages
+    Browser --> API
+    URLShortener --> Redis
+    Analytics --> Redis
+    URLManagement --> Redis
+    API --> Redis
+
+    classDef platform fill:#f9f,stroke:#333,stroke-width:2px
+    classDef service fill:#bbf,stroke:#333,stroke-width:2px
+    classDef database fill:#dfd,stroke:#333,stroke-width:2px
+
+    class Vercel platform
+    class API,Services,Models service
+    class Redis database
+```
+
 ## Tech Stack
 
 Frontend:
@@ -47,6 +99,14 @@ npm install
 ```
 
 3. Configure environment variables in `.env.local`:
+
+```
+STORAGE_HOST=redis_url
+STORAGE_PORT=redis_port
+STORAGE_PASSWORD=redis_password
+NEXT_PUBLIC_BASE_URL=http://localhost:3000
+```
+
 4. Run development server:
 
 ```bash
@@ -70,6 +130,19 @@ npm run test:coverage
 
 Test files are located in the `__tests__` directory and follow the naming convention `*.test.ts`.
 
+## Structure
+
+```
+public/               # public assets
+src/                  # Application sources
+  | __tests__/        # API test files
+  | app/              # Routes files
+  | components/       # React Component files
+  | lib/              # Shared functions
+  | models/           # Database models
+  | services/         # Services files
+```
+
 ## API Routes
 
 - `POST /api/shorten`: Create short URL
@@ -77,6 +150,8 @@ Test files are located in the `__tests__` directory and follow the naming conven
 - `PATCH /api/shorten`: Update short URL
 - `DELETE /api/shorten/:shortCode`: Delete short URL
 - `GET /:shortCode`: Redirect to original URL
+
+See more: https://gslink.vercel.app/docs
 
 ## Deployment
 

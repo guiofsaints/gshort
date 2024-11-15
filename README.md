@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Gui Shortener
 
-## Getting Started
+A modern URL shortener built with Next.js 14, Redis Cloud, and Vercel.
 
-First, run the development server:
+## Features
+
+- URL shortening with custom IDs
+- Real-time analytics
+- URL management (enable/disable)
+- Dashboard for URL stats
+- Redis Cloud for fast URL resolution
+- Serverless deployment on Vercel
+
+## Tech Stack
+
+- Next.js 14
+- TypeScript
+- Redis Cloud
+- Tailwind CSS
+- Nanoid
+
+## Setup
+
+1. Clone repository:
+
+```bash
+git clone https://github.com/yourusername/url-shortener.git
+cd g-short
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+3. Configure environment variables in `.env.local`:
+
+4. Run development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+5. Build for production:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## API Routes
 
-## Learn More
+- `POST /api/shorten`: Create short URL
+- `GET /api/shorten`: Get ALL Short URL
+- `PATCH /api/shorten`: Update short URL
+- `DELETE /api/shorten/:shortCode`: Delete short URL
+- `GET /:shortCode`: Redirect to original URL
 
-To learn more about Next.js, take a look at the following resources:
+## Deployment
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Deploy to Vercel:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+vercel deploy
+```
 
-## Deploy on Vercel
+## License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT

@@ -1,0 +1,339 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Gui Shortener API",
+    "version": "1.0.0",
+    "description": "API for managing shortened URLs"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Local development server"
+    },
+    {
+      "url": "http://lgssd.com",
+      "description": "Production server"
+    }
+  ],
+  "paths": {
+    "/api/shorten": {
+      "post": {
+        "summary": "Create a short URL",
+        "operationId": "createShortUrl",
+        "tags": ["URLs"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["url"],
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "format": "uri",
+                    "example": "https://example.com/very-long-url"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Short URL created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ShortUrl"
+                    },
+                    "status": {
+                      "type": "integer",
+                      "example": 201
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/Error500"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all shortened URLs",
+        "operationId": "getAllShortUrls",
+        "tags": ["URLs"],
+        "responses": {
+          "200": {
+            "description": "List of all shortened URLs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ShortUrl"
+                      }
+                    },
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/Error500"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update a shortened URL",
+        "operationId": "updateShortUrl",
+        "tags": ["URLs"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["shortCode", "originalUrl", "status"],
+                "properties": {
+                  "shortCode": {
+                    "type": "string",
+                    "example": "abc123"
+                  },
+                  "originalUrl": {
+                    "type": "string",
+                    "format": "uri",
+                    "example": "https://example.com/updated-url"
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": ["enabled", "disabled"],
+                    "example": "enabled"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "URL updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ShortUrl"
+                    },
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "500": {
+            "$ref": "#/components/responses/Error500"
+          }
+        }
+      }
+    },
+    "/api/shorten/{shortCode}": {
+      "delete": {
+        "summary": "Delete a shortened URL",
+        "operationId": "deleteShortUrl",
+        "tags": ["URLs"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "shortCode",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Short code of the URL to delete",
+            "example": "abc123"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "URL deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "shortCode": {
+                          "type": "string",
+                          "example": "abc123"
+                        }
+                      }
+                    },
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "500": {
+            "$ref": "#/components/responses/Error500"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ShortUrl": {
+        "type": "object",
+        "description": "Represents a shortened URL entity",
+        "required": ["shortCode", "originalUrl", "status", "createdAt"],
+        "properties": {
+          "shortCode": {
+            "type": "string",
+            "description": "Unique identifier for the shortened URL",
+            "minLength": 6,
+            "maxLength": 10,
+            "example": "abc123"
+          },
+          "originalUrl": {
+            "type": "string",
+            "format": "uri",
+            "description": "The original URL that was shortened",
+            "maxLength": 2048,
+            "example": "https://example.com/very-long-url"
+          },
+          "shortUrl": {
+            "type": "string",
+            "format": "uri",
+            "description": "The complete shortened URL (optional)",
+            "example": "https://short.url/abc123"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["enabled", "disabled"],
+            "description": "Current status of the shortened URL",
+            "example": "enabled"
+          },
+          "visits": {
+            "type": "integer",
+            "description": "Number of times the shortened URL has been visited",
+            "minimum": 0,
+            "default": 0,
+            "example": 42
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp when the URL was created",
+            "example": "2024-03-15T10:30:00Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp when the URL was last updated",
+            "example": "2024-03-15T15:45:00Z"
+          }
+        }
+      }
+    },
+    "responses": {
+      "Error400": {
+        "description": "Bad Request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "shortCode is required"
+                },
+                "status": {
+                  "type": "integer",
+                  "example": 400
+                }
+              }
+            }
+          }
+        }
+      },
+      "Error404": {
+        "description": "Not Found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "URL not found"
+                },
+                "status": {
+                  "type": "integer",
+                  "example": 404
+                }
+              }
+            }
+          }
+        }
+      },
+      "Error500": {
+        "description": "Server Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "Failed to create short URL"
+                },
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "URLs",
+      "description": "Operations for managing shortened URLs"
+    }
+  ]
+}

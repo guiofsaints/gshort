@@ -1,0 +1,21 @@
+{
+  // .vscode/settings.json
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "typescript.tsdk": "node_modules/typescript/lib",
+
+  // Configurações do Tailwind
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+  "tailwindCSS.includeLanguages": {
+    "typescript": "javascript",
+    "typescriptreact": "javascript"
+  },
+  // Opcional: para ter sugestões mais rápidas do Tailwind
+  "editor.suggest.showStatusBar": true,
+  "editor.quickSuggestionsDelay": 0
+}

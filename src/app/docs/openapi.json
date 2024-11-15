@@ -11,7 +11,7 @@
       "description": "Local development server"
     },
     {
-      "url": "http://lgssd.com",
+      "url": "https://gslink.vercel.app",
       "description": "Production server"
     }
   ],

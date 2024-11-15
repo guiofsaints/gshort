@@ -3,6 +3,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { validateUrl } from '@/lib/validator';
 
 /**
  * Props for the UrlInput component
@@ -43,19 +44,7 @@ export function UrlInput({
   /** State to store validation error message */
   const [error, setError] = useState<string>('');
 
-  /**
-   * Validates if the provided string is a valid URL
-   * @param {string} url - URL to validate
-   * @returns {boolean} True if URL is valid, false otherwise
-   */
-  const validateUrl = (url: string): boolean => {
-    try {
-      new URL(url);
-      return true;
-    } catch {
-      return false;
-    }
-  };
+
 
   /**
    * Handles form submission with validation

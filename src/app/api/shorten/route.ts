@@ -4,6 +4,7 @@
  */
 
 import { ApiResponse } from '@/lib/api';
+import { validateUrl } from '@/lib/validator';
 import {
   createShortUrl,
   getAllShortUrl,
@@ -21,6 +22,17 @@ import { NextResponse } from 'next/server';
 export async function POST(request: Request) {
   try {
     const { url } = await request.json();
+
+    if (!validateUrl(url)) {
+      return NextResponse.json<ApiResponse<null>>(
+        {
+          error: 'Invalid URL format.',
+          status: 400,
+        },
+        { status: 400 }
+      );
+    }
+
     const shortUrl = await createShortUrl(url);
 
     if (!shortUrl) {
@@ -93,6 +105,16 @@ export async function PATCH(request: Request) {
       return NextResponse.json<ApiResponse<null>>(
         {
           error: 'shortCode, status and originalUrl are required',
+          status: 400,
+        },
+        { status: 400 }
+      );
+    }
+
+    if (status !== "enabled" && status !== "disabled") {
+      return NextResponse.json<ApiResponse<null>>(
+        {
+          error: 'invalid status',
           status: 400,
         },
         { status: 400 }

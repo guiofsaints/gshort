@@ -24,8 +24,8 @@ A modern URL shortener built with Next.js 14, Redis Cloud, and Vercel.
 1. Clone repository:
 
 ```bash
-git clone https://github.com/guiofsaints/gshort
-cd gshort
+git clone https://github.com/guiofsaints/gslink
+cd gslink
 ```
 
 2. Install dependencies:
@@ -47,6 +47,31 @@ npm run dev
 ```bash
 npm run build
 ```
+
+## Testing
+
+The project uses Jest and Supertest for API testing.
+
+1. Install testing dependencies:
+
+```bash
+npm install --save-dev jest @types/jest ts-jest @testing-library/jest-dom supertest @types/supertest @jest/globals
+```
+
+2. Run tests:
+
+```bash
+# Run all tests
+npm test
+
+# Run tests in watch mode
+npm run test:watch
+
+# Run tests with coverage
+npm run test:coverage
+```
+
+Test files are located in the `__tests__` directory and follow the naming convention `*.test.ts`.
 
 ## API Routes
 

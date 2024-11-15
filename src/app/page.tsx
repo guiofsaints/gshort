@@ -16,6 +16,11 @@ import { createUrl, deleteUrl, getUrls, updateUrl } from '@/services/urlService'
 import { ArrowRight, Loader2 } from "lucide-react";
 import Link from 'next/link';
 
+/**
+ * URL Shortener page component that provides functionality to create, manage and track shortened URLs.
+ * Features include URL shortening, editing, deletion, and clipboard operations.
+ * @returns {JSX.Element} The rendered URL Shortener page
+ */
 export default function URLShortener() {
   const [url, setUrl] = useState<string>("");
   const [shortenedUrls, setShortenedUrls] = useState<ShortUrlType[]>([]);
@@ -26,6 +31,10 @@ export default function URLShortener() {
   const [isDeletingUrl, setIsDeletingUrl] = useState<string | null>(null);
   const [isEditingUrl, setIsEditingUrl] = useState<string | null>(null);
 
+  /**
+   * Creates a new shortened URL from the input URL
+   * @returns {Promise<void>}
+   */
   const handleCreate = async () => {
     if (url) {
       try {
@@ -40,6 +49,11 @@ export default function URLShortener() {
     }
   };
 
+  /**
+   * Deletes a shortened URL by its short code
+   * @param {string} shortCode - The short code of the URL to delete
+   * @returns {Promise<void>}
+   */
   const handleDelete = async (shortCode: string) => {
     try {
       setIsDeletingUrl(shortCode);
@@ -52,6 +66,11 @@ export default function URLShortener() {
     }
   };
 
+  /**
+   * Initiates editing mode for a shortened URL
+   * @param {ShortUrlType} shorUrl - The URL object to edit
+   * @returns {Promise<void>}
+   */
   const handleEdit = async (shorUrl: ShortUrlType) => {
     try {
       setIsEditingUrl(shorUrl.shortCode);
@@ -61,6 +80,10 @@ export default function URLShortener() {
     }
   };
 
+  /**
+   * Saves the edited URL changes
+   * @returns {Promise<void>}
+   */
   const handleSaveEdit = async () => {
     if (editingUrl) {
       const { status } = await updateUrl(editingUrl);
@@ -76,11 +99,16 @@ export default function URLShortener() {
     }
   };
 
+  /**
+   * Copies the provided text to clipboard and shows success message
+   * @param {string} text - The text to copy to clipboard
+   */
   const handleCopy = (text: string) => {
     navigator.clipboard.writeText(text);
     setSuccessMessage(`Copied to clipboard: ${text}`);
   };
 
+  // Fetch initial URLs on component mount
   useEffect(() => {
     (async () => {
       try {
@@ -139,7 +167,6 @@ export default function URLShortener() {
           />
         </CardContent>
       </Card>
-
 
       <Card className="mt-10">
         <CardHeader>

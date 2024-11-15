@@ -44,8 +44,6 @@ export function UrlInput({
   /** State to store validation error message */
   const [error, setError] = useState<string>('');
 
-
-
   /**
    * Handles form submission with validation
    * Sets error message if validation fails

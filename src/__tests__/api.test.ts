@@ -23,11 +23,9 @@ describe('URL Shortener API', () => {
 
   describe('POST /shorten', () => {
     it('should create a short URL successfully', async () => {
-      const response = await request(baseURL)
-        .post('/shorten')
-        .send({
-          url: 'https://example.com/very-long-url',
-        });
+      const response = await request(baseURL).post('/shorten').send({
+        url: 'https://example.com/very-long-url',
+      });
 
       const body = response.body as APIResponse<ShortUrl>;
 
@@ -41,19 +39,15 @@ describe('URL Shortener API', () => {
     });
 
     it('should fail with invalid URL format', async () => {
-      const response = await request(baseURL)
-        .post('/shorten')
-        .send({
-          url: 'invalid-url',
-        });
+      const response = await request(baseURL).post('/shorten').send({
+        url: 'invalid-url',
+      });
 
       expect(response.status).toBe(400);
     });
 
     it('should fail when URL is missing', async () => {
-      const response = await request(baseURL)
-        .post('/shorten')
-        .send({});
+      const response = await request(baseURL).post('/shorten').send({});
 
       expect(response.status).toBe(400);
     });
@@ -93,13 +87,11 @@ describe('URL Shortener API', () => {
     });
 
     it('should fail with invalid status value', async () => {
-      const response = await request(baseURL)
-        .patch('/shorten')
-        .send({
-          shortCode,
-          originalUrl: 'https://example.com/updated-url',
-          status: 'invalid-status',
-        });
+      const response = await request(baseURL).patch('/shorten').send({
+        shortCode,
+        originalUrl: 'https://example.com/updated-url',
+        status: 'invalid-status',
+      });
 
       expect(response.status).toBe(400);
     });

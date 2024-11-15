@@ -19,6 +19,20 @@ A modern URL shortener built with Next.js 14, Redis Cloud, and Vercel.
 - Tailwind CSS
 - Nanoid
 
+## Structure
+
+```
+gslink/
+├── .vscode/
+├── public/
+├── src/
+│   ├── components/
+│   ├── pages/
+│   ├── styles/
+│   └── utils/
+
+```
+
 ## Setup
 
 1. Clone repository:

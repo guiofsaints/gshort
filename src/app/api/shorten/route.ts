@@ -111,7 +111,7 @@ export async function PATCH(request: Request) {
       );
     }
 
-    if (status !== "enabled" && status !== "disabled") {
+    if (status !== 'enabled' && status !== 'disabled') {
       return NextResponse.json<ApiResponse<null>>(
         {
           error: 'invalid status',

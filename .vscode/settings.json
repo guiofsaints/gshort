@@ -5,6 +5,8 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
   },
+  "files.eol": "\r\n",
+
   "typescript.tsdk": "node_modules/typescript/lib",
 
   // Configurações do Tailwind

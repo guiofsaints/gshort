@@ -13,7 +13,7 @@ import { Button } from '@/components/ui/button';
 type CopyButtonProps = {
   textToCopy: string;
   onCopy: (text: string) => void;
-}
+};
 
 /**
  * Renders a button that copies text with visual feedback
@@ -30,11 +30,7 @@ export function CopyButton({ textToCopy, onCopy }: CopyButtonProps) {
   };
 
   return (
-    <Button
-      variant="outline"
-      size="icon"
-      onClick={handleCopy}
-    >
+    <Button variant="outline" size="icon" onClick={handleCopy}>
       {copied ? (
         <Check className="h-4 w-4 text-green-500" />
       ) : (

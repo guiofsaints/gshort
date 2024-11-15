@@ -30,8 +30,7 @@
     "react-dom": "^18",
     "redis": "^4.7.0",
     "swagger-ui-react": "^5.18.2",
-    "tailwind-merge": "^2.5.4",
-    "yaml": "^2.6.0"
+    "tailwind-merge": "^2.5.4"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^15.0.3",

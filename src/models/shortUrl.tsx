@@ -1,4 +1,10 @@
-import { deleteValue, exists, getKeys, getValue, setValue } from '@/lib/storage';
+import {
+  deleteValue,
+  exists,
+  getKeys,
+  getValue,
+  setValue,
+} from '@/lib/storage';
 import { nanoid } from 'nanoid';
 
 /** Maximum attempts to generate a unique short code */
@@ -9,21 +15,21 @@ const MAX_RETRIES_ID = 5;
  * @interface ShortUrlType
  */
 export type ShortUrlType = {
-  shortCode: string
-  originalUrl: string
-  shortUrl?: string
-  status: 'enabled' | 'disabled'
-  visits?: number
-  createdAt: string
-  updatedAt?: string
-}
+  shortCode: string;
+  originalUrl: string;
+  shortUrl?: string;
+  status: 'enabled' | 'disabled';
+  visits?: number;
+  createdAt: string;
+  updatedAt?: string;
+};
 
 /**
  * Visit count data structure
  * @interface VisitType
  */
 export type VisitType = {
-  visits: number
+  visits: number;
 };
 
 /**
@@ -50,7 +56,9 @@ async function generateUniqueId(): Promise<string | null> {
  * @param {string} url - Original URL to shorten
  * @returns {Promise<ShortUrlType|null>} Created short URL data or null if generation fails
  */
-export async function createShortUrl(url: string): Promise<ShortUrlType | null> {
+export async function createShortUrl(
+  url: string
+): Promise<ShortUrlType | null> {
   const shortCode = await generateUniqueId();
 
   if (!shortCode) {
@@ -75,7 +83,10 @@ export async function createShortUrl(url: string): Promise<ShortUrlType | null> 
  * @param {ShortUrlType} updatedUrlData - Updated URL data
  * @returns {Promise<ShortUrlType>} Updated URL data
  */
-export async function updateShortUrl(shortCode: string, updatedUrlData: ShortUrlType): Promise<ShortUrlType> {
+export async function updateShortUrl(
+  shortCode: string,
+  updatedUrlData: ShortUrlType
+): Promise<ShortUrlType> {
   await setValue(`url:${shortCode}`, updatedUrlData);
   return updatedUrlData;
 }
@@ -85,7 +96,9 @@ export async function updateShortUrl(shortCode: string, updatedUrlData: ShortUrl
  * @param {string} shortCode - Short code to check
  * @returns {Promise<Boolean|null>} True if exists
  */
-export async function existsShortUrl(shortCode: string): Promise<Boolean | null> {
+export async function existsShortUrl(
+  shortCode: string
+): Promise<Boolean | null> {
   return exists(`url:${shortCode}`);
 }
 
@@ -94,7 +107,9 @@ export async function existsShortUrl(shortCode: string): Promise<Boolean | null>
  * @param {string} shortCode - Short code to retrieve
  * @returns {Promise<ShortUrlType|null>} URL data or null if not found
  */
-export async function getShortUrl(shortCode: string): Promise<ShortUrlType | null> {
+export async function getShortUrl(
+  shortCode: string
+): Promise<ShortUrlType | null> {
   return getValue<ShortUrlType>(`url:${shortCode}`);
 }
 
@@ -103,7 +118,9 @@ export async function getShortUrl(shortCode: string): Promise<ShortUrlType | nul
  * @param {string} shortCode - Short code to get visits for
  * @returns {Promise<VisitType|null>} Visit data or null if not found
  */
-export async function getShortUrlVisits(shortCode: string): Promise<VisitType | null> {
+export async function getShortUrlVisits(
+  shortCode: string
+): Promise<VisitType | null> {
   return getValue<VisitType>(`visits:${shortCode}`);
 }
 
@@ -114,9 +131,9 @@ export async function getShortUrlVisits(shortCode: string): Promise<VisitType | 
 export async function incrementUrlVisits(shortCode: string) {
   const data = await getShortUrlVisits(shortCode);
   if (data !== null && data !== undefined) {
-    await setValue(`visits:${shortCode}`, { "visits": data.visits + 1 });
+    await setValue(`visits:${shortCode}`, { visits: data.visits + 1 });
   } else {
-    await setValue(`visits:${shortCode}`, { "visits": 1 });
+    await setValue(`visits:${shortCode}`, { visits: 1 });
   }
 }
 
@@ -134,7 +151,7 @@ export async function deleteShortUrl(shortCode: string): Promise<boolean> {
     }
     await Promise.all([
       deleteValue(`url:${shortCode}`),
-      deleteValue(`visits:${shortCode}`)
+      deleteValue(`visits:${shortCode}`),
     ]);
     return true;
   } catch (error) {
@@ -159,7 +176,7 @@ export async function deactivateShortUrl(shortCode: string): Promise<boolean> {
     const updatedData: ShortUrlType = {
       ...urlData,
       status: 'disabled',
-      updatedAt: new Date().toISOString()
+      updatedAt: new Date().toISOString(),
     };
 
     await setValue(`url:${shortCode}`, updatedData);
@@ -179,7 +196,9 @@ export async function getAllShortUrl(): Promise<ShortUrlType[]> {
     keys.map(async (key) => {
       const shortCode = key.split(':')[1];
       const data = await getValue(key);
-      const dataVisits = (await getValue(`visits:${shortCode}`)) || { visits: 0 };
+      const dataVisits = (await getValue(`visits:${shortCode}`)) || {
+        visits: 0,
+      };
 
       return {
         shortCode,

@@ -6,10 +6,10 @@
  * @property {number} status - HTTP status code
  */
 export type ApiResponse<T> = {
-  data?: T
-  error?: string
-  status: number
-}
+  data?: T;
+  error?: string;
+  status: number;
+};
 
 /**
  * Generic API fetch wrapper with error handling
@@ -31,24 +31,24 @@ export async function api<T>(
   options?: RequestInit
 ): Promise<ApiResponse<T>> {
   try {
-    const response = await fetch(url, options)
-    const responseData: ApiResponse<T> = await response.json()
+    const response = await fetch(url, options);
+    const responseData: ApiResponse<T> = await response.json();
 
     if (!response.ok) {
       return {
         error: responseData.error || 'An error occurred',
-        status: response.status
-      }
+        status: response.status,
+      };
     }
 
     return {
       data: responseData.data,
-      status: response.status
-    }
+      status: response.status,
+    };
   } catch (error) {
     return {
       error: error instanceof Error ? error.message : 'An error occurred',
-      status: 500
-    }
+      status: 500,
+    };
   }
 }

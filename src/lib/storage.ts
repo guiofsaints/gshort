@@ -139,12 +139,12 @@ export async function getValue<T = StorageValue>(
  */
 export async function deleteValue(key: string): Promise<boolean> {
   try {
-    const storage = await getClient()
-    const result = await storage.del(key)
-    return result > 0
+    const storage = await getClient();
+    const result = await storage.del(key);
+    return result > 0;
   } catch (error) {
-    console.error('Error deleting key from Redis:', error)
-    throw new Error(`Failed to delete key: ${key}`)
+    console.error('Error deleting key from Redis:', error);
+    throw new Error(`Failed to delete key: ${key}`);
   }
 }
 

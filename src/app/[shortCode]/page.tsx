@@ -9,7 +9,7 @@ import { RedirectType } from 'next/navigation';
 
 type PageProps = {
   params: Promise<{ shortCode: string }>;
-}
+};
 
 /**
  * RedirectPage component handles the redirection logic

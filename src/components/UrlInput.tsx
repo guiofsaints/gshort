@@ -17,16 +17,16 @@ type UrlInputProps = {
   onUrlChange: (url: string) => void;
   onShorten: () => void;
   isLoading: boolean;
-}
+};
 
 /**
  * URL input component with validation and shortening functionality.
  * Provides URL input field, validation, and shortening button with loading state.
- * 
+ *
  * @component
  * @example
  * ```tsx
- * <UrlInput 
+ * <UrlInput
  *   url={url}
  *   onUrlChange={setUrl}
  *   onShorten={handleShorten}
@@ -34,7 +34,12 @@ type UrlInputProps = {
  * />
  * ```
  */
-export function UrlInput({ url, onUrlChange, onShorten, isLoading }: UrlInputProps) {
+export function UrlInput({
+  url,
+  onUrlChange,
+  onShorten,
+  isLoading,
+}: UrlInputProps) {
   /** State to store validation error message */
   const [error, setError] = useState<string>('');
 

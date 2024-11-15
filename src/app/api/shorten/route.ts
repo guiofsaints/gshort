@@ -4,9 +4,14 @@
  */
 
 import { ApiResponse } from '@/lib/api';
-import { createShortUrl, getAllShortUrl, getShortUrl, ShortUrlType, updateShortUrl } from '@/models/shortUrl';
+import {
+  createShortUrl,
+  getAllShortUrl,
+  getShortUrl,
+  ShortUrlType,
+  updateShortUrl,
+} from '@/models/shortUrl';
 import { NextResponse } from 'next/server';
-
 
 /**
  * POST handler for creating new shortened URLs
@@ -19,22 +24,30 @@ export async function POST(request: Request) {
     const shortUrl = await createShortUrl(url);
 
     if (!shortUrl) {
-      return NextResponse.json<ApiResponse<null>>({
-        error: 'Could not generate unique shortCode. Please try again.',
-        status: 500
-      }, { status: 500 });
+      return NextResponse.json<ApiResponse<null>>(
+        {
+          error: 'Could not generate unique shortCode. Please try again.',
+          status: 500,
+        },
+        { status: 500 }
+      );
     }
 
-    return NextResponse.json<ApiResponse<ShortUrlType>>({
-      data: shortUrl,
-      status: 201
-    }, { status: 201 });
-
+    return NextResponse.json<ApiResponse<ShortUrlType>>(
+      {
+        data: shortUrl,
+        status: 201,
+      },
+      { status: 201 }
+    );
   } catch (error) {
-    return NextResponse.json<ApiResponse<null>>({
-      error: 'Failed to create short URL',
-      status: 500
-    }, { status: 500 });
+    return NextResponse.json<ApiResponse<null>>(
+      {
+        error: 'Failed to create short URL',
+        status: 500,
+      },
+      { status: 500 }
+    );
   }
 }
 
@@ -46,17 +59,22 @@ export async function GET() {
   try {
     const urls = await getAllShortUrl();
 
-    return NextResponse.json<ApiResponse<typeof urls>>({
-      data: urls,
-      status: 200
-    }, { status: 200 });
-
+    return NextResponse.json<ApiResponse<typeof urls>>(
+      {
+        data: urls,
+        status: 200,
+      },
+      { status: 200 }
+    );
   } catch (error) {
     console.error('Error fetching URLs:', error);
-    return NextResponse.json<ApiResponse<null>>({
-      error: 'Failed to fetch URLs',
-      status: 500
-    }, { status: 500 });
+    return NextResponse.json<ApiResponse<null>>(
+      {
+        error: 'Failed to fetch URLs',
+        status: 500,
+      },
+      { status: 500 }
+    );
   }
 }
 
@@ -70,40 +88,51 @@ export async function PATCH(request: Request) {
     const { shortCode, originalUrl, status } = await request.json();
 
     if (!shortCode || !originalUrl || !status) {
-      return NextResponse.json<ApiResponse<null>>({
-        error: 'shortCode, status and originalUrl are required',
-        status: 400
-      }, { status: 400 });
+      return NextResponse.json<ApiResponse<null>>(
+        {
+          error: 'shortCode, status and originalUrl are required',
+          status: 400,
+        },
+        { status: 400 }
+      );
     }
 
     const urlData = await getShortUrl(shortCode);
 
     if (!urlData) {
-      return NextResponse.json<ApiResponse<null>>({
-        error: 'URL not found',
-        status: 404
-      }, { status: 404 });
+      return NextResponse.json<ApiResponse<null>>(
+        {
+          error: 'URL not found',
+          status: 404,
+        },
+        { status: 404 }
+      );
     }
 
     const updatedUrlData = {
       ...urlData,
       status,
       originalUrl: originalUrl.trim(),
-      updatedAt: new Date().toISOString()
+      updatedAt: new Date().toISOString(),
     };
 
     await updateShortUrl(shortCode, updatedUrlData);
 
-    return NextResponse.json<ApiResponse<typeof updatedUrlData>>({
-      data: updatedUrlData,
-      status: 200
-    }, { status: 200 });
-
+    return NextResponse.json<ApiResponse<typeof updatedUrlData>>(
+      {
+        data: updatedUrlData,
+        status: 200,
+      },
+      { status: 200 }
+    );
   } catch (error) {
     console.error('Error updating URL:', error);
-    return NextResponse.json<ApiResponse<null>>({
-      error: 'Failed to update URL',
-      status: 500
-    }, { status: 500 });
+    return NextResponse.json<ApiResponse<null>>(
+      {
+        error: 'Failed to update URL',
+        status: 500,
+      },
+      { status: 500 }
+    );
   }
 }

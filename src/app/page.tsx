@@ -12,8 +12,13 @@ import { ShortenedUrlTable } from '@/components/ShortenedUrlTable';
 import { SuccessAlert } from '@/components/SuccessAlert';
 import { UrlInput } from '@/components/UrlInput';
 import { ShortUrlType } from '@/models/shortUrl';
-import { createUrl, deleteUrl, getUrls, updateUrl } from '@/services/urlService';
-import { ArrowRight, Loader2 } from "lucide-react";
+import {
+  createUrl,
+  deleteUrl,
+  getUrls,
+  updateUrl,
+} from '@/services/urlService';
+import { ArrowRight, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 
 /**
@@ -22,7 +27,7 @@ import Link from 'next/link';
  * @returns {JSX.Element} The rendered URL Shortener page
  */
 export default function URLShortener() {
-  const [url, setUrl] = useState<string>("");
+  const [url, setUrl] = useState<string>('');
   const [shortenedUrls, setShortenedUrls] = useState<ShortUrlType[]>([]);
   const [editingUrl, setEditingUrl] = useState<ShortUrlType | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
@@ -42,7 +47,7 @@ export default function URLShortener() {
         const { data } = await createUrl(url);
         setShortenedUrls([...shortenedUrls, data] as ShortUrlType[]);
         setSuccessMessage(`URL shortened successfully: ${data?.shortUrl}`);
-        setUrl("");
+        setUrl('');
       } finally {
         setIsShorteningUrl(false);
       }
@@ -57,9 +62,11 @@ export default function URLShortener() {
   const handleDelete = async (shortCode: string) => {
     try {
       setIsDeletingUrl(shortCode);
-      const { status } = await deleteUrl(shortCode)
+      const { status } = await deleteUrl(shortCode);
       if (status === 200) {
-        setShortenedUrls(shortenedUrls.filter((url) => url.shortCode !== shortCode));
+        setShortenedUrls(
+          shortenedUrls.filter((url) => url.shortCode !== shortCode)
+        );
       }
     } finally {
       setIsDeletingUrl(null);
@@ -90,8 +97,9 @@ export default function URLShortener() {
 
       if (status === 200) {
         setShortenedUrls((prevUrls: ShortUrlType[]) =>
-          prevUrls.map((url: ShortUrlType): ShortUrlType =>
-            url.shortCode === editingUrl.shortCode ? editingUrl : url
+          prevUrls.map(
+            (url: ShortUrlType): ShortUrlType =>
+              url.shortCode === editingUrl.shortCode ? editingUrl : url
           )
         );
         setEditingUrl(null);
@@ -133,7 +141,8 @@ export default function URLShortener() {
       <Card className="mt-10 mb-10 bg-gradient-to-r from-yellow-50 to-green-100">
         <CardHeader>
           <CardTitle className="text-4xl bg-gradient-to-r from-green-500 to-yellow-500 text-transparent bg-clip-text font-bold">
-            Gui Shortener</CardTitle>
+            Gui Shortener
+          </CardTitle>
           <CardDescription>Shorten your long URLs with ease</CardDescription>
         </CardHeader>
         <CardContent>
@@ -179,7 +188,8 @@ export default function URLShortener() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-muted-foreground mb-2">
-                Explore our API documentation to learn how to integrate URL shortening functionality into your applications
+                Explore our API documentation to learn how to integrate URL
+                shortening functionality into your applications
               </p>
               <p className="text-sm text-muted-foreground">
                 Built with OpenAPI Specification and SwaggerUI

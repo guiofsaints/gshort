@@ -12,21 +12,21 @@ import { CopyButton } from './CopyButton';
 type SuccessAlertProps = {
   message: string;
   onCopy: (text: string) => void;
-}
+};
 
 /**
  * Success alert component with copy functionality.
  * Displays a success message with the ability to copy content.
- * 
+ *
  * @component
  * @example
  * ```tsx
- * <SuccessAlert 
- *   message="Operation successful: Content copied" 
- *   onCopy={(text) => console.log('Copied:', text)} 
+ * <SuccessAlert
+ *   message="Operation successful: Content copied"
+ *   onCopy={(text) => console.log('Copied:', text)}
  * />
  * ```
- * 
+ *
  * @param {SuccessAlertProps} props - Component props
  * @param {string} props.message - The message to display in the alert
  * @param {function} props.onCopy - Callback function when content is copied
@@ -52,10 +52,7 @@ export function SuccessAlert({ message, onCopy }: SuccessAlertProps) {
       <AlertTitle>Success</AlertTitle>
       <AlertDescription className="flex items-center justify-between">
         {message}
-        <CopyButton
-          textToCopy={message.split(': ')[1]}
-          onCopy={onCopy}
-        />
+        <CopyButton textToCopy={message.split(': ')[1]} onCopy={onCopy} />
       </AlertDescription>
     </Alert>
   );

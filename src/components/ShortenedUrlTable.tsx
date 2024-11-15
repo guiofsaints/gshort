@@ -6,7 +6,7 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Badge } from "@/components/ui/badge";
+import { Badge } from '@/components/ui/badge';
 import {
   Table,
   TableBody,
@@ -42,20 +42,23 @@ type ShortenedUrlTableProps = {
   onSaveEdit: () => void;
   isDeletingUrl: string | null;
   isEditingUrl: string | null;
-}
+};
 
 /**
  * Generates a styled badge based on URL status
  */
 const getStatusBadge = (status: string) => {
   const variants = {
-    enabled: "bg-green-100 text-green-800",
-    disabled: "bg-red-100 text-red-800",
-    pending: "bg-yellow-100 text-yellow-800"
+    enabled: 'bg-green-100 text-green-800',
+    disabled: 'bg-red-100 text-red-800',
+    pending: 'bg-yellow-100 text-yellow-800',
   };
 
   return (
-    <Badge variant="outline" className={`${variants[status as keyof typeof variants]}`}>
+    <Badge
+      variant="outline"
+      className={`${variants[status as keyof typeof variants]}`}
+    >
       {status.charAt(0).toUpperCase() + status.slice(1)}
     </Badge>
   );
@@ -98,13 +101,13 @@ export function ShortenedUrlTable({
     if (editingUrl) {
       setEditingUrl({
         ...editingUrl,
-        status: checked ? 'enabled' : 'disabled'
+        status: checked ? 'enabled' : 'disabled',
       });
     }
   };
 
-  const sortedUrls = [...urls].sort((a, b) =>
-    moment(b.createdAt).valueOf() - moment(a.createdAt).valueOf()
+  const sortedUrls = [...urls].sort(
+    (a, b) => moment(b.createdAt).valueOf() - moment(a.createdAt).valueOf()
   );
 
   return (
@@ -172,7 +175,9 @@ export function ShortenedUrlTable({
                         />
                       </div>
                       <div className="items-center gap-4">
-                        <Label htmlFor="status" className="text-left mr-4">URL Status</Label>
+                        <Label htmlFor="status" className="text-left mr-4">
+                          URL Status
+                        </Label>
                         <Switch
                           id="status"
                           className="text-left"
@@ -181,14 +186,17 @@ export function ShortenedUrlTable({
                         />
                       </div>
                     </div>
-                    <Button onClick={handleSaveAndClose} disabled={isEditingUrl === url.shortCode}>
+                    <Button
+                      onClick={handleSaveAndClose}
+                      disabled={isEditingUrl === url.shortCode}
+                    >
                       {isEditingUrl === url.shortCode ? (
                         <>
                           <Loader2 className="h-4 w-4 animate-spin mr-2" />
                           Saving...
                         </>
                       ) : (
-                        "Save changes"
+                        'Save changes'
                       )}
                     </Button>
                   </DialogContent>
@@ -206,10 +214,7 @@ export function ShortenedUrlTable({
                   )}
                   <span className="sr-only">Delete URL</span>
                 </Button>
-                <CopyButton
-                  textToCopy={url.shortUrl || ""}
-                  onCopy={onCopy}
-                />
+                <CopyButton textToCopy={url.shortUrl || ''} onCopy={onCopy} />
               </div>
             </TableCell>
           </TableRow>
